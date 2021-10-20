@@ -30,7 +30,7 @@ float nadiMaxBodova(student* stud, int n) {
 	return  maxBodovi;
 }
 
-float nadiRelativnoBodove(student stud, int n, float maxBodovi) {
+float nadiRelativnoBodove(student stud, float maxBodovi) {
 	float rel_bodovi = (stud.bodovi / maxBodovi) * 100;
 	return rel_bodovi;
 }
@@ -87,7 +87,7 @@ int printStudent(student* stud, int brojac) {
 	printf("IME\t PREZIME\t OCJENA APSOLUTNO\t OCJENA RELATIVNO\n");
 
 	for (int i = 0; i < brojac; i++) {
-		stud[i].rel_bodovi = nadiRelativnoBodove(stud[i], brojac, maxBodovi);
+		stud[i].rel_bodovi = nadiRelativnoBodove(stud[i], maxBodovi);
 		printf("%s\t %s\t %6.0f%%\t %18.0f%%\n", stud[i].ime, stud[i].prezime, stud[i].bodovi, stud[i].rel_bodovi);
 	}
 
