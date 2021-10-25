@@ -78,7 +78,7 @@ int Ispis(Position p) {
 		printf("\n");
 	}
 };
-// Neznam zasto ali funkcija izbrisi nece raditi ako se ide brisati prvi element u listi, inace radi kako treba
+// funkcija izbrisi nece raditi ako se ide brisati prvi element u listi, inace radi kako treba
 int Izbrisi(Position p) {
 	Position prev = NULL;
 	Position curr = NULL;
