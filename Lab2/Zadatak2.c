@@ -92,7 +92,7 @@ int Izbrisi(Position p) {
 	};
 	curr = prev->next;
 	prev->next = prev->next->next;
-	free(curr);
+	free(curr); // ovim se oslobada adresa na koju pokazuj curr, cime se brise element
 	printf("\nElement uspjesno izbrisan\n");
 	return 0;
 };
