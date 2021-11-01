@@ -19,8 +19,8 @@ int UmetniNakon(Position, char*, Student);
 int UmetniPrije(Position, char*, Student);
 int Sortiraj(Position);
 
-int UpisiDatoteku(FILE*, Position);
-int ProcitajDatoteku(FILE*, Position);
+int UpisiDatoteku(char* , Position);
+int ProcitajDatoteku(char *, Position);
 
 int Umetni(Position, Student);
 int Ispis(Position);
@@ -29,7 +29,8 @@ Position PronadiPosljedni(Position);
 Position Pronadi(Position);
 Position PronadiPrethodni(Position, char*);
 
-int UpisiDatoteku(FILE* fp, Position p) {
+int UpisiDatoteku(char* ime, Position p) {
+	FILE* fp = fopen(ime, "w");
 	if (fp == NULL)
 		return -2;
 	for (; p != NULL; p = p->next) {
@@ -38,7 +39,8 @@ int UpisiDatoteku(FILE* fp, Position p) {
 	fclose(fp);
 }
 
-int ProcitajDatoteku(FILE* fp, Position p) {
+int ProcitajDatoteku(char* ime, Position p) {
+	FILE* fp = fopen(ime, "r");
 	if (fp == NULL)
 		return -2;
 	Student temp;
@@ -167,9 +169,6 @@ Position Pronadi(Position p, char* prezime) {
 };
 
 int main() {
-	FILE* fp1 = fopen("out.txt", "w");
-	FILE* fp2 = fopen("in.txt", "r");
-
 	char ch;
 	int isActive = 1;
 	Position head = NULL;
@@ -219,16 +218,19 @@ int main() {
 				break;
 			case '3':
 				Sortiraj(head);
+				break;
 			case '4': 
-				UpisiDatoteku(fp1, head->next);
+				UpisiDatoteku("out.txt", head->next);
 				break;
 			case '5': 
-				ProcitajDatoteku(fp2, head);
+				ProcitajDatoteku("in.txt", head);
 				break;
 			case '6': Ispis(head->next);
 				break;
 			case '7': isActive = 0;
 				printf("Kraj unosa");
+				break;
+			default: printf("Probajte opet\n");
 				break;
 		}
 		printf("\n");
