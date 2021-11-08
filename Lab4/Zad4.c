@@ -26,7 +26,10 @@ int main(int argc, char** argv){
 	printf("Umnozak polinoma: ");
 	Ispis(umnozak.next);
 
-	// OslobodiMemoriju(poly1);
+	OslobodiMemoriju(&poly1);
+	OslobodiMemoriju(&poly2);
+	OslobodiMemoriju(&zbroj);
+	OslobodiMemoriju(&umnozak);
 	return 0;
 };
 
