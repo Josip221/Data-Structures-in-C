@@ -18,11 +18,11 @@ int main(int argc, char** argv){
 	printf("Polinom 2: ");
 	Ispis(poly2.next);
 
-	ZbrojiPolinome(poly1.next, poly2.next, &zbroj);
+	ZbrojiPolinome(&poly1, &poly2, &zbroj);
 	printf("Zbroj polinoma: ");
 	Ispis(zbroj.next);
 
-	PomnoziPolinome(poly1.next, poly2.next, &umnozak);
+	PomnoziPolinome(&poly1, &poly2, &umnozak);
 	printf("Umnozak polinoma: ");
 	Ispis(umnozak.next);
 
