@@ -133,30 +133,15 @@ int ZbrojiPolinome(Position pol1, Position pol2, Position pol_zbr){
 };
 
 int PomnoziPolinome(Position pol1, Position pol2, Position pol_umnoz){
-	// Position pol2_poc = pol2, tmp = NULL;
-	// while (pol1 != NULL)
-	// {	
-	// 	while(pol2 != NULL){
-	// 		tmp = StvoriCvor();
-	// 		tmp->next = NULL;
-	// 		tmp->baza = pol1->baza * pol2->baza;
-	// 		tmp->exp = pol1->exp + pol2->exp;
-	// 		ZbrojiPolinome(pol_umnoz->next, tmp, pol_umnoz);
-	// 		pol2 = pol2->next;
-	// 	}	
-	// 	pol1 = pol1->next;
-	// 	pol2 = pol2_poc;
-	// };
-	
 	Position i = NULL;
 	Position j = NULL;
+	Position noviElement = StvoriCvor();
+	noviElement->next = NULL;
 
 	for (i = pol1->next; i != NULL; i = i->next)
 	{
 		for (j =pol2->next; j != NULL; j = j->next)
 		{
-			Position noviElement = StvoriCvor();
-			noviElement->next = NULL;
 			noviElement->baza = i->baza * j->baza;
 			noviElement->exp = i->exp + j->exp;
 			if (!noviElement)
