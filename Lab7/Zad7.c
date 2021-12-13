@@ -93,7 +93,7 @@ int main(){
 				break;
 		}
 	}
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 int dir(PozicijaDirektorij trenutni){
@@ -106,7 +106,7 @@ int dir(PozicijaDirektorij trenutni){
 			tmp = tmp->susjed;
 		}
 	}
-	return 0;
+	return EXIT_SUCCESS;
 };
 
 PozicijaDirektorij cd(Pozicija stog, PozicijaDirektorij trenutni, char *ime){
@@ -134,7 +134,7 @@ int SortiraniUnos(PozicijaDirektorij trenutni , PozicijaDirektorij q){
 
 	if(trenutni->dijete == NULL){
 		trenutni->dijete = q;
-		return 0;
+		return EXIT_SUCCESS;
 	}
 
 	head->susjed = trenutni->dijete;
@@ -144,7 +144,7 @@ int SortiraniUnos(PozicijaDirektorij trenutni , PozicijaDirektorij q){
 	q->susjed = r->susjed;
 	r->susjed = q;
 	trenutni->dijete = head->susjed;
-	return 0;
+	return EXIT_SUCCESS;
 };
 
 PozicijaDirektorij md(Pozicija stog, PozicijaDirektorij trenutni, char* ime){
@@ -156,9 +156,10 @@ PozicijaDirektorij md(Pozicija stog, PozicijaDirektorij trenutni, char* ime){
 
 int PrintOpcije(){
 	printf("\n\n********************************************************************\n\n");
-	printf("Odaberi operaciju: \n\t 1. md (stvori direktorij) \n\t 2. cd dir (promjeni direktorij) \n\t 3. cd.. (promjeni u direktorij roditelja) "
+	printf("Operacije: \n\t 1. md (stvori direktorij) \n\t 2. cd dir (promjeni direktorij) \n\t 3. cd.. (promjeni u direktorij roditelja) "
 	"\n\t 4. dir (ispisi sadrzaj odabranog direktorija) \n\t 5. prekid program\n");
-	return 0;
+	printf("\n\n********************************************************************\n\n");
+	return EXIT_SUCCESS;
 }
 
 Pozicija StvoriPoziciju(){
