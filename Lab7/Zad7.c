@@ -18,6 +18,8 @@ typedef struct _Cvor {
 	Pozicija sljedeci;
 } Cvor;
 
+int OslobodiCvor(Pozicija);
+int OslobodiDirektorij(PozicijaDirektorij);
 int Push(Pozicija, PozicijaDirektorij);
 int PrintOpcije();
 int SortiraniUnos(PozicijaDirektorij, PozicijaDirektorij);
@@ -93,6 +95,34 @@ int main(){
 				break;
 		}
 	}
+	OslobodiCvor(stog);
+	OslobodiDirektorij(korijen);
+	//nisam provjerio jeli radi oslobađanje memorije, debugger mi ne radi :/
+	return EXIT_SUCCESS;
+}
+
+int OslobodiCvor(Pozicija stog){
+	Pozicija tmp = NULL;
+	while(stog->sljedeci){
+		tmp = stog->sljedeci;
+		stog->sljedeci = tmp->sljedeci;
+		free(tmp);
+	}
+	return EXIT_SUCCESS;
+}
+int OslobodiDirektorij(PozicijaDirektorij trenutni){
+	PozicijaDirektorij tmp = NULL;
+	if(trenutni->dijete){
+		OslobodiDirektorij(trenutni->dijete);
+	}
+	else{
+		while(trenutni){
+			tmp = trenutni->susjed;
+			trenutni->susjed = tmp->susjed;
+			free(tmp);
+			trenutni = trenutni->susjed;
+		}
+	}
 	return EXIT_SUCCESS;
 }
 
@@ -155,10 +185,10 @@ PozicijaDirektorij md(Pozicija stog, PozicijaDirektorij trenutni, char* ime){
 }
 
 int PrintOpcije(){
-	printf("\n\n********************************************************************\n\n");
-	printf("Operacije: \n\t 1. md (stvori direktorij) \n\t 2. cd dir (promjeni direktorij) \n\t 3. cd.. (promjeni u direktorij roditelja) "
+	printf("\n********************************************************************\n");
+	printf("Odaberi operaciju: \n\t 1. md (stvori direktorij) \n\t 2. cd dir (promjeni direktorij) \n\t 3. cd.. (promjeni u direktorij roditelja) "
 	"\n\t 4. dir (ispisi sadrzaj odabranog direktorija) \n\t 5. prekid program\n");
-	printf("\n\n********************************************************************\n\n");
+	printf("\n********************************************************************\n");
 	return EXIT_SUCCESS;
 }
 
