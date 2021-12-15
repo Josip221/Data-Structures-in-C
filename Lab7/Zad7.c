@@ -115,14 +115,12 @@ int OslobodiDirektorij(PozicijaDirektorij trenutni){
 	if(trenutni->dijete){
 		OslobodiDirektorij(trenutni->dijete);
 	}
-	else{
-		while(trenutni){
-			tmp = trenutni->susjed;
-			trenutni->susjed = tmp->susjed;
-			free(tmp);
-			trenutni = trenutni->susjed;
-		}
-	}
+	do{
+		tmp = trenutni->susjed;
+		trenutni->susjed = tmp->susjed;
+		free(tmp);
+		trenutni = trenutni->susjed;
+	} while(trenutni);
 	return EXIT_SUCCESS;
 }
 
