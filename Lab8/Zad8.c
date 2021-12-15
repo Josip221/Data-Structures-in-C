@@ -6,8 +6,8 @@ struct _CvorStabla;
 typedef struct _CvorStabla *Stablo;
 typedef struct _CvorStabla {
 	int broj;
-	Stablo Lijevo;
-	Stablo Desno;
+	Stablo lijevo;
+	Stablo desno;
 } CvorStabla;
 
 Stablo StvoriStablo(int);
@@ -15,6 +15,9 @@ Stablo Unos(Stablo, int);
 int InOrderPrint(Stablo);
 int PostOrderPrint(Stablo);
 int PreOrderPrint(Stablo);
+Stablo IzbrisiCvor(int, Stablo);
+Stablo NadiMin(Stablo);
+Stablo NadiCvor(int, Stablo);
 
 
 //Stog na First in First out principu
@@ -35,7 +38,7 @@ int main(){
 	char ch = '0';
 	int isActive = 1, broj = 0;
 	Pozicija stogHead = NULL;
-	Stablo korijen = NULL;
+	Stablo korijen = NULL, temp = NULL;
 	
 	stogHead = StvoriStogElement();
 
@@ -51,6 +54,7 @@ int main(){
 	// 				  5
 	// 			2			10
 	// 		1		3	9		12
+
 	while(isActive){
 		printf("\nOdaberi operaciju binarnog stabla:\n");
 		printf("1 - unos novog elementa u stablo\n");
@@ -69,25 +73,33 @@ int main(){
 				korijen = Unos(korijen, broj);
 				break;
 			case '2':
-			printf("\nInOrder: \n");
+				printf("\nInOrder: \n");
 				InOrderPrint(korijen);
 				break;
 			case '3':
-			printf("\nPostOrder: \n");
+				printf("\nPostOrder: \n");
 				PostOrderPrint(korijen);
 				break;
 			case '4':
-			printf("\nPreOrder: \n");
+				printf("\nPreOrder: \n");
 				PreOrderPrint(korijen);
 				break;
 			case '5':
-			printf("\nLevelOrder: \n");
+				printf("\nLevelOrder: \n");
 				LevelOrderPrint(korijen, stogHead);
 				break;
 			case '6':
-
+				printf("\nUnesi koji broj zelis naci u stablu: ");
+				scanf("%d", &broj);
+				temp = NadiCvor(broj, korijen);
+				if(temp){
+					printf("\nCvor %d se nalazi na adres %d\n", temp->broj, temp);
+				}
 				break;
 			case '7':
+				printf("\nUnesi element koji brises iz stabla: \n");
+				scanf("%d", &broj);
+				korijen = IzbrisiCvor(broj, korijen);
 				break;
 			case '8':
 				printf("\nZavrsetak programa");
@@ -109,9 +121,7 @@ int Push(Stablo cvor, Pozicija stogHead){
 	stogHead->sljedeci = q;
 }
 
-
 int Pop(Pozicija stogHead){
-	//FIFO
 	Pozicija prev, curr = NULL;
 	prev = StvoriStogElement();
 	curr = StvoriStogElement();
@@ -140,6 +150,82 @@ Pozicija StvoriStogElement(){
 	return q;
 }
 
+int LevelOrderPrint(Stablo korijen, Pozicija stogHead){
+	Stablo trenutni = NULL;
+	if(korijen == NULL){
+		return EXIT_SUCCESS;
+	}
+	Push(korijen, stogHead);
+	while(stogHead->sljedeci != NULL){
+		trenutni = NadiZadnjiNaStogu(stogHead);
+		if(trenutni->lijevo != NULL){
+			Push(trenutni->lijevo, stogHead);
+		}
+		if(trenutni->desno != NULL){
+			Push(trenutni->desno, stogHead);
+		}
+		Pop(stogHead);
+	}
+}
+
+Stablo NadiZadnjiNaStogu(Pozicija stogHead){
+	while (stogHead->sljedeci != NULL) {
+		stogHead = stogHead->sljedeci;
+	}
+	return stogHead->cvor;
+}
+
+Stablo IzbrisiCvor(int broj, Stablo korijen){
+	Stablo tmp = NULL;
+	if(!korijen){
+		return korijen;
+	}
+	else if(broj < korijen->broj){
+		korijen->lijevo = IzbrisiCvor(broj, korijen->lijevo);
+	}
+	else if(broj > korijen->broj){
+		korijen->desno = IzbrisiCvor(broj, korijen->desno);
+	}
+	else{
+		if(korijen->lijevo && korijen->desno){
+			tmp = NadiMin(korijen->desno);
+			korijen->broj = tmp->broj;
+			korijen->desno = IzbrisiCvor(tmp->broj, korijen->desno);
+		}
+		else{
+			tmp = korijen;
+			if(!korijen->lijevo){
+				korijen = korijen->desno;
+			}
+			else if(!korijen->desno){
+				korijen = korijen->lijevo;
+			}
+			free(tmp);
+		}
+	}
+	return korijen;
+};
+Stablo NadiMin(Stablo korijen){
+	while(korijen->lijevo){
+		korijen = korijen->lijevo;
+	}
+	return korijen;
+};
+Stablo NadiCvor(int broj, Stablo korijen){
+	if(!korijen){
+		return korijen;
+	}
+	else if(broj < korijen->broj){
+		return NadiCvor(broj, korijen->lijevo);
+	}
+	else if(broj > korijen->broj){
+		return NadiCvor(broj, korijen->desno);
+	}
+	else{
+		return korijen;
+	}
+};
+
 Stablo StvoriStablo(int broj){
 	Stablo q = malloc(sizeof(CvorStabla));
 	if(!q){
@@ -147,8 +233,8 @@ Stablo StvoriStablo(int broj){
 		return NULL;
 	}
 	q->broj = broj;
-	q->Lijevo = NULL;
-	q->Desno = NULL;
+	q->lijevo = NULL;
+	q->desno = NULL;
 	return q;
 }
 
@@ -158,15 +244,14 @@ Stablo Unos(Stablo p, int broj){
 	}
 	else{
 		if(broj > p->broj){
-			p->Desno = Unos(p->Desno, broj);
+			p->desno = Unos(p->desno, broj);
 		}
 		if(broj < p->broj){
-			p->Lijevo = Unos(p->Lijevo, broj);
+			p->lijevo = Unos(p->lijevo, broj);
 		}
 	}
 	return p;
 }
-
 
 int InOrderPrint(Stablo korijen){
 	if(korijen == NULL){
@@ -174,9 +259,9 @@ int InOrderPrint(Stablo korijen){
 	}
 	else{
 
-		InOrderPrint(korijen->Lijevo);
+		InOrderPrint(korijen->lijevo);
 		printf("%d\n", korijen->broj);
-		InOrderPrint(korijen->Desno);
+		InOrderPrint(korijen->desno);
 	}
 	return EXIT_SUCCESS;
 }
@@ -187,8 +272,8 @@ int PostOrderPrint(Stablo korijen){
 	}
 	else{
 
-		PostOrderPrint(korijen->Lijevo);
-		PostOrderPrint(korijen->Desno);
+		PostOrderPrint(korijen->lijevo);
+		PostOrderPrint(korijen->desno);
 		printf("%d\n", korijen->broj);
 	}
 	return EXIT_SUCCESS;
@@ -201,33 +286,8 @@ int PreOrderPrint(Stablo korijen){
 	else{
 
 		printf("%d\n", korijen->broj);
-		PreOrderPrint(korijen->Lijevo);
-		PreOrderPrint(korijen->Desno);
+		PreOrderPrint(korijen->lijevo);
+		PreOrderPrint(korijen->desno);
 	}
 	return EXIT_SUCCESS;
-}
-
-int LevelOrderPrint(Stablo korijen, Pozicija stogHead){
-	Stablo trenutni = NULL;
-	if(korijen == NULL){
-		return EXIT_SUCCESS;
-	}
-	Push(korijen, stogHead);
-	while(stogHead->sljedeci != NULL){
-		trenutni = NadiZadnjiNaStogu(stogHead);
-		if(trenutni->Lijevo != NULL){
-			Push(trenutni->Lijevo, stogHead);
-		}
-		if(trenutni->Desno != NULL){
-			Push(trenutni->Desno, stogHead);
-		}
-		Pop(stogHead);
-	}
-}
-
-Stablo NadiZadnjiNaStogu(Pozicija stogHead){
-	while (stogHead->sljedeci != NULL) {
-		stogHead = stogHead->sljedeci;
-	}
-	return stogHead->cvor;
 }
