@@ -1,8 +1,0 @@
-Bucharest 1800000
-Cluj 350000
-Timisoara 300000
-Buzau 115000
-Botosani 100000
-Slobozia 45000
-Alexandria 40000
-Vulcan 20000
