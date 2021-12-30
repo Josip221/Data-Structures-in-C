@@ -86,11 +86,11 @@ int NadiPopulacijeGradovaVeceOdX(PozicijaStablo p, int populacijaX){
 	if(p == NULL){
 		return EXIT_SUCCESS;
 	}
+	NadiPopulacijeGradovaVeceOdX(p->lijevo, populacijaX);
 	if(p->populacija > populacijaX){
-		NadiPopulacijeGradovaVeceOdX(p->lijevo, populacijaX);
 		printf("%s %d, ", p->grad, p->populacija);
-		NadiPopulacijeGradovaVeceOdX(p->desno, populacijaX);
 	}
+	NadiPopulacijeGradovaVeceOdX(p->desno, populacijaX);
 	return EXIT_SUCCESS;
 }
 
