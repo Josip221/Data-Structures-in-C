@@ -69,7 +69,7 @@ int PrintPhoneBookMenu();
 int BrojIspravan();
 int StvoriVrijemeTrajanjaPoziva();
 int RandomBroj(int, int);
-int MenuStop():
+int MenuStop();
 
 //Datum funkcije
 Datum StvoriRandomDatum();
