@@ -17,17 +17,15 @@ int StvoriVrijemeTrajanjaPoziva(){
 }
 
 int MenuStop(){
-	printf("Odaberite bilo koju tipku za natrag na glavni menu: ");
+	printf("\nOdaberite bilo koju tipku za natrag na glavni menu: ");
 	//fflush(stdin); bad
 	fseek(stdin, 0, SEEK_END);
 	getchar();
-	system("cls");
 	return EXIT_SUCCESS;
 }
 
 int PrintPhoneBookMenu(){
-	printf("\n============================================================");
-	printf("\n************************************************************\n");
+	PrintBorder();
 	printf("\n\t\t\tPhonebook Menu\t\t\t\n\n");
 	printf("\t\t1. Dodaj novi kontakt\n");
 	printf("\t\t2. Napravi poziv\n");
@@ -38,6 +36,23 @@ int PrintPhoneBookMenu(){
 	printf("\t\t7. Datoteka menu\n");
 	printf("\t\t8. Statistika\n");
 	printf("\t\t9. Izadi iz programa\n");
+	PrintBorder();
+	return EXIT_SUCCESS;
+}
+
+int PrintDatotekaMenu(){
+	PrintBorder();
+	printf("\tDatoteka menu: \n");
+	printf("\t\t1. Ucitaj kontakte\n");
+	printf("\t\t2. Spremi kontakte\n");
+	printf("\t\t3. Ucitaj pozive\n");
+	printf("\t\t4. Spremi pozive\n");
+	printf("\t\t5. Natrag na glavni menu\n");
+	PrintBorder();
+	return EXIT_SUCCESS;
+}
+
+int PrintBorder(){
 	printf("\n============================================================");
 	printf("\n************************************************************\n");
 	return EXIT_SUCCESS;

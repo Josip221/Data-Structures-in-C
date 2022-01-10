@@ -58,9 +58,8 @@ int ProvjeriDaliPostojiVecBroj(char* , PozicijaKontakt);
 PozicijaPoziv StvoriPoziv();
 int NapraviPoziv(PozicijaPoziv, PozicijaKontakt);
 int DodajPozivUListu(PozicijaPoziv, PozicijaKontakt, char*);
-int ProcitajPozivDatoteku(PozicijaPoziv, char*);
+int ProcitajPozivDatoteku(PozicijaPoziv, PozicijaKontakt, char*);
 int SpremiPozivDatoteku(PozicijaPoziv);
-int ProcitajPozivDatoteku(PozicijaPoziv, char*);
 int PrintPozivLista(PozicijaPoziv);
 
 
@@ -70,6 +69,9 @@ int BrojIspravan();
 int StvoriVrijemeTrajanjaPoziva();
 int RandomBroj(int, int);
 int MenuStop();
+int PrintDatotekaMenu();
+int PrintBorder();
+int OpcijaDatoteka(PozicijaKontakt, PozicijaPoziv);
 
 //Datum funkcije
 Datum StvoriRandomDatum();
@@ -78,4 +80,5 @@ int PrintDatum(Datum);
 
 
 //Hash 
+
 #endif

@@ -17,12 +17,11 @@ int main(int argc, char *argv[]){
 	headPoziv = StvoriPoziv();
 	headPozivSortirano = StvoriPoziv();
 
-	ProcitajKontaktDatoteku("kontakti.txt", headKontakt);
-
 	while(isActive){
 		PrintPhoneBookMenu();
 		printf("Odaberite opciju: ", ch);
 		scanf(" %c", &ch);
+		system("cls");
 		switch(ch){
 			case '1': 
 				OpcijaDodajNoviKontakt(headKontakt);
@@ -43,7 +42,7 @@ int main(int argc, char *argv[]){
 				PrintPozivLista(headPoziv->sljedeci);
 				break;
 			case '7':
-			//datoteka menu za snimanje i citanje
+				OpcijaDatoteka(headKontakt, headPoziv);
 				break;
 			case '8':
 			//statistika
@@ -66,7 +65,9 @@ int OpcijaDodajNoviKontakt(PozicijaKontakt headKontakt){
 	scanf(" %s %s", tmp1, tmp2);
 	printf("Upisite pozivni broj kontakta u formatu XXX-XXX-XXXX: ");
 	scanf(" %s", tmp3); //provjera
-	DodajKontaktUListu(headKontakt, tmp3, tmp1, tmp2);
+	if(DodajKontaktUListu(headKontakt, tmp3, tmp1, tmp2)){
+		printf("Uspjesno dodan %s %s %s u kontakte.\n", tmp3, tmp1, tmp2);
+	}
 	return EXIT_SUCCESS;
 }
 
@@ -108,5 +109,45 @@ int OpcijaIzbrisiKontakt(PozicijaKontakt headKontakt){
 		printf("Greska pri brisanju kontakta. Probajte opet.\n");
 		return EXIT_FAILURE;
 	}
+	return EXIT_SUCCESS;
+}
+
+int OpcijaDatoteka(PozicijaKontakt headKontakt, PozicijaPoziv headPoziv){
+	char ch = '0';
+	char tmp[MAX] = {0};
+	int isActive = 1;
+
+	system("cls");
+	while(isActive){
+		PrintDatotekaMenu();
+		scanf(" %c", &ch);
+		system("cls");
+		switch(ch){
+			case '1': 
+				printf("Odabrano citanje kontakt datoteke. Upisite ime datoteke: ");
+				scanf(" %s", tmp);
+				ProcitajKontaktDatoteku(tmp, headKontakt);
+				break;
+			case '2': 
+				printf("Odabrano spremanje kontakt datoteke. Upisite ime datoteke: ");
+				scanf(" %s", tmp);
+				break;
+			case '3':
+				printf("Odabrano citanje poziv datoteke. Upisite ime datoteke: ");
+				scanf(" %s", tmp);
+				break;
+			case '4':
+				printf("Odabrano spremanje kontakt datoteke. Upisite ime datoteke: ");
+				scanf(" %s", tmp);
+				break;
+			case '5':
+				isActive = 0;
+				break;
+			default: 
+				printf("Krivi unos probatje ponovno\n");
+				break;
+		}
+	}
+
 	return EXIT_SUCCESS;
 }

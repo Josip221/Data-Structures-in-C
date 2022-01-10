@@ -16,6 +16,24 @@ PozicijaPoziv StvoriPoziv(){
 	return tmp;
 }
 
+int ProcitajPozivDatoteku(PozicijaPoziv headPoziv, PozicijaKontakt headKontakt, char* imeDat){
+	// FILE* dat = NULL;
+	// PozicijaKontakt tmpKontakt = NULL;
+	// char tmp1[MAX] = {0}, tmp2[MAX] = {0};
+	// dat = fopen(imeDat, "w");
+	// if(!dat){
+	// 	printf("Greska pri otvaranju poziv datoteke");
+	// 	return EXIT_FAILURE;
+	// }
+	// while(!feof(dat)){
+	// 	fscanf("%s %s", tmp1, tmp2);
+	// 	tmpKontakt = NadiKontaktPoBroju(headKontakt, tmp2);
+	// 	DodajPozivUListu(headPoziv, headKontakt, tmpKontakt->pozivni_broj);
+	// }
+	// fclose(dat);
+	// return EXIT_SUCCESS;
+}
+
 int DodajPozivUListu(PozicijaPoziv headPoziv, PozicijaKontakt headKontakt, char* pozivni_broj){
 	int base_id = 1;
 	PozicijaPoziv tmp = StvoriPoziv();
@@ -29,7 +47,7 @@ int DodajPozivUListu(PozicijaPoziv headPoziv, PozicijaKontakt headKontakt, char*
 	tmp->id_poziv = base_id;
 	tmp->trajanje_poziva = StvoriVrijemeTrajanjaPoziva();
 	tmp->kontakt = pozivniKontakt;
-
+	//sortiraj po datumu
 	while(headPoziv->sljedeci != NULL){
 		if(UsporediDatume(tmp->datum, headPoziv->sljedeci->datum)){
 			break;

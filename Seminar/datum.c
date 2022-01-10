@@ -21,6 +21,6 @@ int UsporediDatume(Datum dm1, Datum dm2){
 }
 
 int PrintDatum(Datum dm){
-	printf(" %d-%d-%d", dm.godina, dm.mjesec, dm.dan);
+	printf(" %d-%d-%d", dm.dan, dm.mjesec, dm.godina);
 	return EXIT_SUCCESS;
 }
