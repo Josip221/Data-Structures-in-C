@@ -24,3 +24,61 @@ int PrintDatum(Datum dm){
 	printf(" %d-%d-%d", dm.dan, dm.mjesec, dm.godina);
 	return EXIT_SUCCESS;
 }
+
+int ProvjeriDatum(char* tmpDatum){
+	Datum dm = {.dan = 0, .godina = 0, .mjesec = 0};
+	char tmpString[MAX_STRING_SIZE] = {0};
+	char* token = NULL;
+	int i = 1;
+	strcpy(tmpString, tmpDatum);
+
+	token = strtok(tmpString, "-");
+
+	for(i = 1; i < 4; i++){
+		if(i == 1){
+			dm.dan = atoi(token);
+			token = strtok(NULL, "-");
+		}
+		else if(i == 2){
+			dm.mjesec = atoi(token);
+			token = strtok(NULL, "-");
+		}
+		else if(i == 3){
+			dm.godina = atoi(token);
+		}
+	}
+
+	if(dm.godina >= 2000 && dm.godina <= 2022){
+		if(dm.mjesec <= 12 && dm.mjesec >= 1){
+			if(dm.dan >= 1 && dm.dan <= 30){
+				return EXIT_SUCCESS;
+			}
+		}
+	}
+	return EXIT_FAILURE;
+}
+
+Datum PretvoriStringUDatum(char* string){
+	Datum dm = {.dan = 0, .godina = 0, .mjesec = 0};
+	char tmpString[MAX_STRING_SIZE] = {0};
+	char* token = NULL;
+	int i = 1;
+	strcpy(tmpString, string);
+
+	token = strtok(tmpString, "-");
+
+	for(i = 1; i < 4; i++){
+		if(i == 1){
+			dm.dan = atoi(token);
+			token = strtok(NULL, "-");
+		}
+		else if(i == 2){
+			dm.mjesec = atoi(token);
+			token = strtok(NULL, "-");
+		}
+		else if(i == 3){
+			dm.godina = atoi(token);
+		}
+	}
+	return dm;
+}

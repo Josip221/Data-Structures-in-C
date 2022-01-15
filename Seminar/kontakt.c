@@ -16,31 +16,16 @@ PozicijaKontakt StvoriKontakt(){
 
 int ProcitajKontaktDatoteku(char *imeDat, PozicijaKontakt headKontakt) {
 	FILE *dat = NULL;
-	char tmpBroj[MAX] = {0};
-	char tmpIme[MAX] = {0}, tmpPrezime[MAX] = {0};
+	char tmpBroj[MAX_STRING_SIZE] = {0};
+	char tmpIme[MAX_STRING_SIZE] = {0}, tmpPrezime[MAX_STRING_SIZE] = {0};
 	dat = fopen(imeDat, "r");
 	if(!dat){
-		printf("Greska pri otvaranju datoteke.");
+		printf("Greska pri otvaranju kontakt datoteke. Probajte ponovno");
 		return EXIT_FAILURE;
 	}
 	while(!feof(dat)){
 		fscanf(dat, "%s %s %s", tmpIme, tmpPrezime, tmpBroj);
 		DodajKontaktUListu(headKontakt, tmpBroj, tmpIme, tmpPrezime);
-	}
-	fclose(dat);
-	return EXIT_SUCCESS;
-}
-
-int SpremiKontaktDatoteku(char *imeDat, PozicijaKontakt headKontakt){
-	FILE *dat = NULL;
-	dat = fopen(imeDat, "w");
-	if(!dat){
-		printf("Greska pri otvaranju datoteke.");
-		return EXIT_FAILURE;
-	}
-	while(headKontakt->sljedeci != NULL){
-		fprintf(dat, "%s %s %s", headKontakt->ime, headKontakt->prezime, headKontakt->pozivni_broj);
-		headKontakt = headKontakt->sljedeci;
 	}
 	fclose(dat);
 	return EXIT_SUCCESS;
@@ -70,14 +55,13 @@ int PrintKontaktLista(PozicijaKontakt headKontakt){
 int DodajKontaktUListu(PozicijaKontakt headKontakt, char* pozivni_broj, char* ime, char* prezime){
 	PozicijaKontakt noviKontakt = NULL;
 	noviKontakt = StvoriKontakt();
-	char tmpIme1[MAX] = {0}, tmpIme2[MAX] = {0};
-	char tmpPrezime1[MAX] = {0}, tmpPrezime2[MAX] = {0};
-
-	if(BrojIspravan()){
+	char tmpIme1[MAX_STRING_SIZE] = {0}, tmpIme2[MAX_STRING_SIZE] = {0};
+	char tmpPrezime1[MAX_STRING_SIZE] = {0}, tmpPrezime2[MAX_STRING_SIZE] = {0};
+	if(BrojIspravan(pozivni_broj) == EXIT_SUCCESS){
 		strcpy(noviKontakt->pozivni_broj, pozivni_broj);
 	}
 	else{
-		printf("Ne ispravno unešen pozivni broj!");
+		printf("Ne ispravno unesen pozivni broj, treba biti u formatu: XXX-XXX-XXXX");
 		return EXIT_FAILURE;
 	}
 	strcpy(noviKontakt->ime, ime);
@@ -113,7 +97,7 @@ int DodajKontaktUListu(PozicijaKontakt headKontakt, char* pozivni_broj, char* im
 	return EXIT_SUCCESS;
 }
 
-int ProvjeriDaliPostojiVecBroj(char* pozivni_broj, PozicijaKontakt headKontakt){ //napravi hash + bst za ovo nekako...
+int ProvjeriDaliPostojiVecBroj(char* pozivni_broj, PozicijaKontakt headKontakt){
 	//ne smiju biti dva kontakta s istim pozivnim brojem
 	while(headKontakt != NULL){
 		if(strcmp(pozivni_broj, headKontakt->pozivni_broj) == 0){
@@ -134,7 +118,7 @@ int IzbrisiKontaktIzListe(PozicijaKontakt kontakt){
 }
 
 PozicijaKontakt NadiKontaktPoBroju(PozicijaKontakt headKontakt, char* pozivni_broj){
-	while(headKontakt->sljedeci != NULL){
+	while(headKontakt != NULL){
 		if(strcmp(pozivni_broj, headKontakt->pozivni_broj) == 0){
 			return headKontakt;
 		}
@@ -148,8 +132,8 @@ PozicijaKontakt NadiKontaktPoBroju(PozicijaKontakt headKontakt, char* pozivni_br
 
 int AzurirajKontaktIzListe(PozicijaKontakt headKontakt, PozicijaKontakt kontakt){
 	char ch = '0';
-	char novo[MAX] = {0};
-	char staroIme[MAX] = {0}, staroPrezime[MAX] = {0}, pozivni_broj[MAX] = {0};
+	char novo[MAX_STRING_SIZE] = {0};
+	char staroIme[MAX_STRING_SIZE] = {0}, staroPrezime[MAX_STRING_SIZE] = {0}, pozivni_broj[MAX_STRING_SIZE] = {0};
 	int isActive = 1;
 
 	strcpy(staroIme, kontakt->ime);
@@ -159,19 +143,23 @@ int AzurirajKontaktIzListe(PozicijaKontakt headKontakt, PozicijaKontakt kontakt)
 	//izbrisi kontakt sa starim imenom i istim brojem
 	IzbrisiKontaktIzListe(kontakt);
 	while(isActive){
-		printf("Azuriraj:\n\t 1. Ime\n\t2. Prezime\n"); 
+		printf("Azuriraj:\n\t 1. Ime\n\t 2. Prezime\n"); 
 		scanf(" %c", &ch);
 		switch(ch){
 			case '1':
 				printf("Novo ime: ");
 				scanf(" %s", &novo);
-				DodajKontaktUListu(headKontakt, pozivni_broj, novo, staroPrezime);
+				if(DodajKontaktUListu(headKontakt, pozivni_broj, novo, staroPrezime) == EXIT_SUCCESS){
+					printf("Uspjesno izmjenjen kontakt iz %s %s u %s %s", staroIme, staroPrezime, novo, staroPrezime);
+				}
 				isActive = 0;
 				break;
 			case '2':
 				printf("Novo prezime: ");
 				scanf(" %s", &novo);
-				DodajKontaktUListu(headKontakt, pozivni_broj, staroIme, novo);
+				if(DodajKontaktUListu(headKontakt, pozivni_broj, staroIme, novo) == EXIT_SUCCESS){
+					printf("Uspjesno izmjenjen kontakt iz %s %s u %s %s", staroIme, staroPrezime, staroIme, novo);
+				}
 				isActive = 0;
 				break;
 			default:
@@ -179,5 +167,21 @@ int AzurirajKontaktIzListe(PozicijaKontakt headKontakt, PozicijaKontakt kontakt)
 				break;
 		}
 	}
+	return EXIT_SUCCESS;
+}
+
+int SpremiKontakte(PozicijaKontakt headKontakt, char* imeDat){
+	FILE* dat = NULL;
+	dat = fopen(imeDat, "w");
+	if(!dat){
+		printf("Greska pri otvaranju datoteke");
+		return EXIT_FAILURE;
+	}
+	while(headKontakt->sljedeci != NULL){
+		fprintf(dat, "%s %s %s\n", headKontakt->sljedeci->ime, headKontakt->sljedeci->prezime, headKontakt->sljedeci->pozivni_broj);
+		headKontakt = headKontakt->sljedeci;
+	}
+	fclose(dat);
+	printf("Datoteka kontakata uspjesno snimljena");
 	return EXIT_SUCCESS;
 }
