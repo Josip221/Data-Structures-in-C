@@ -1,12 +1,58 @@
 #include "Funkcije.h"
 
-//todo napravi
-int BrojIspravan(){
-	return 1; //dovrsi stringove
+int BrojIspravan(char* testString){
+	int i = 1, status = 0;
+	char tmp[MAX_STRING_SIZE] = {0};
+	strcpy(tmp, testString);
+	char* token = strtok(tmp, "-");
+	// XXX-XXX-XXXX 3-3-4
+	for(i = 1; i < 4; i++){
+		if(strlen(token) == 3 && (i == 1 || i == 2)){
+			token = strtok(NULL, "-");
+			if(StringBezSlova(token) == EXIT_SUCCESS){
+				status++;
+			}
+		}
+		else if(strlen(token) == 4 && i == 3){
+			if(StringBezSlova(token) == EXIT_SUCCESS){
+				status++;
+			}
+		}
+	}
+	if(status == 3){
+		return EXIT_SUCCESS;
+	}
+	else{
+		return EXIT_FAILURE;
+	}
+}
+
+int StringBezSlova(char* testString){
+	int i = 0;
+	if(!testString){
+		return EXIT_FAILURE;
+	}
+	for(i = 0; i < strlen(testString); i++){
+		if(testString[i] < 48 || testString[i] > 57){
+			return EXIT_FAILURE;
+		}
+	}
+	return EXIT_SUCCESS;
 }
 
 int RandomBroj(int max, int min){
 	int rez = (rand() % (max - min + 1)) + min;
+	return rez;
+}
+
+int OdstraniS(char* testString){
+	int rez = 0;
+	char *token = NULL;
+	char tmp[MAX_STRING_SIZE] = {0};
+	strcpy(tmp, testString);
+
+	token = strtok(testString, "s");
+	rez = atoi(token);
 	return rez;
 }
 
@@ -17,10 +63,11 @@ int StvoriVrijemeTrajanjaPoziva(){
 }
 
 int MenuStop(){
-	printf("\nOdaberite bilo koju tipku za natrag na glavni menu: ");
+	printf("\nPritisnite enter za natrag na glavni menu: ");
 	//fflush(stdin); bad
 	fseek(stdin, 0, SEEK_END);
 	getchar();
+	system("cls");
 	return EXIT_SUCCESS;
 }
 
