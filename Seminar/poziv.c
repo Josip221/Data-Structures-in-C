@@ -1,9 +1,5 @@
 #include "Funkcije.h"
  
-//
-// Poziv hash
-//
-
 int hashFunkcija(int key){
 	return key % MAX_HASH_TABLE_SIZE;
 }
