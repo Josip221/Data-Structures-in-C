@@ -2,7 +2,7 @@
 
 Datum StvoriRandomDatum(){
 	Datum dm = {.godina = 0, .mjesec = 0, .dan = 0};
-	dm.godina = RandomBroj(2022, 2000);
+	dm.godina = RandomBroj(2022, 2010);
 	dm.mjesec = RandomBroj(12, 1);
 	dm.dan = RandomBroj(30, 1);
 	return dm;

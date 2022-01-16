@@ -3,8 +3,10 @@
 int BrojIspravan(char* testString){
 	int i = 1, status = 0;
 	char tmp[MAX_STRING_SIZE] = {0};
+
 	strcpy(tmp, testString);
 	char* token = strtok(tmp, "-");
+
 	// XXX-XXX-XXXX 3-3-4
 	for(i = 1; i < 4; i++){
 		if(strlen(token) == 3 && (i == 1 || i == 2)){
@@ -22,9 +24,7 @@ int BrojIspravan(char* testString){
 	if(status == 3){
 		return EXIT_SUCCESS;
 	}
-	else{
-		return EXIT_FAILURE;
-	}
+	return EXIT_FAILURE;
 }
 
 int StringBezSlova(char* testString){
@@ -49,8 +49,8 @@ int OdstraniS(char* testString){
 	int rez = 0;
 	char *token = NULL;
 	char tmp[MAX_STRING_SIZE] = {0};
-	strcpy(tmp, testString);
 
+	strcpy(tmp, testString);
 	token = strtok(testString, "s");
 	rez = atoi(token);
 	return rez;
@@ -81,7 +81,7 @@ int PrintPhoneBookMenu(){
 	printf("\t\t5. Print svi kontakti\n");
 	printf("\t\t6. Print svi pozivi\n");
 	printf("\t\t7. Datoteka menu\n");
-	printf("\t\t8. Statistika\n");
+	printf("\t\t8. Pretrazivanja\n");
 	printf("\t\t9. Izadi iz programa\n");
 	PrintBorder();
 	return EXIT_SUCCESS;

@@ -7,14 +7,20 @@
 #include <string.h>
 #include <ctype.h>
 
-#define MAX_STRING_SIZE 50
+#define MAX_STRING_SIZE 30
 #define MAX_HASH_TABLE_SIZE 11
+#define MAX_BROJ_POZIVA 1000
 
 typedef struct _Datum {
 	int godina;
 	int mjesec;
 	int dan;
 } Datum;
+
+typedef struct _BrojPoziva {
+	int broj_poziva;
+	char pozivni_broj[MAX_STRING_SIZE];
+} BrojPoziva;
 
 struct _Kontakt;
 typedef struct _Kontakt* PozicijaKontakt;
@@ -62,7 +68,6 @@ PozicijaKontakt StvoriKontakt();
 PozicijaKontakt NadiKontaktPoBroju(PozicijaKontakt, char*);
 int DodajKontaktUListu(PozicijaKontakt, char*, char*, char*);
 int IzbrisiKontaktIzListe(PozicijaKontakt);
-//int IzbrisiSveKontakte(PozicijaKontakt);
 int AzurirajKontaktIzListe(PozicijaKontakt, PozicijaKontakt);
 int ProcitajKontaktDatoteku(char *, PozicijaKontakt);
 int PrintKontaktLista(PozicijaKontakt);
@@ -80,6 +85,7 @@ int StabloUListu(PozicijaStablo, PozicijaLista);
 int PrintPozivLista(PozicijaLista);
 int HashTablicuUListu(HashTab, PozicijaLista);
 int DodajPozivUListu(PozicijaStablo, PozicijaLista);
+int SpremiStablo(PozicijaStablo, char*);
 
 //Pomocne funkcije
 int PrintPhoneBookMenu();
@@ -90,8 +96,6 @@ int MenuStop();
 int PrintDatotekaMenu();
 int PrintBorder();
 int OdstraniS(char*);
-
-//int OpcijaDatoteka(PozicijaKontakt,);
 int StringBezSlova();
 
 //Datum funkcije
@@ -100,4 +104,14 @@ int UsporediDatume(Datum, Datum);
 int PrintDatum(Datum);
 int ProvjeriDatum(char*);
 Datum PretvoriStringUDatum(char*);
+
+//Pretrazivanja
+int KolikoPutaJeKontaktNazvan(char* , PozicijaLista);
+int NajduljiPoziv(PozicijaLista);
+int UkupnoVrijemePoziva(PozicijaLista);
+int NadiPoziveUVremenskomRazdoblju(PozicijaLista, Datum , Datum );
+int ObavljeniPozivi(PozicijaLista, PozicijaKontakt);
+
+//Oslobadanje memorije
+
 #endif

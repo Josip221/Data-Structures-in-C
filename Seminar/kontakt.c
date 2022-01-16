@@ -36,7 +36,7 @@ int PrintKontaktLista(PozicijaKontakt headKontakt){
 	char ch = '0', ch1;
 	int isActive = 0;
 	if(headKontakt == NULL){
-		printf("Lista kontakata je trenutno prazna!\n");
+		printf("Lista kontakata je trenutno prazna");
 		return EXIT_SUCCESS;
 	}
 	while(headKontakt != NULL){
@@ -69,7 +69,7 @@ int DodajKontaktUListu(PozicijaKontakt headKontakt, char* pozivni_broj, char* im
 	strcpy(tmpIme2, ime);
 	strcpy(tmpPrezime2, prezime);
 	if(ProvjeriDaliPostojiVecBroj(noviKontakt->pozivni_broj, headKontakt->sljedeci)){
-		printf("Broj vec postoji, probajte ponovno");
+		printf("Ne uspjesno dodan kontakt. Broj %s vec postoji", noviKontakt->pozivni_broj);
 		return EXIT_FAILURE;
 	}
 
@@ -185,3 +185,5 @@ int SpremiKontakte(PozicijaKontakt headKontakt, char* imeDat){
 	printf("Datoteka kontakata uspjesno snimljena");
 	return EXIT_SUCCESS;
 }
+
+//kontakt print pojedinacno

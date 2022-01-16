@@ -41,10 +41,10 @@ HashTab SvoriHashTab(){
 }
 
 int DodajUHashTablicu(HashTab hashTable,  PozicijaStablo q){
-	int index = 0;
+	int index = 0, isActive = 0;
 	PozicijaStablo korijen = NULL, tmp = NULL;
 
-	q->id_poziv = RandomBroj(1000, 1);
+	q->id_poziv = RandomBroj(5000, 1);
 	index = hashFunkcija(q->id_poziv);
 	korijen = hashTable->headPoziv[index];
 
@@ -152,12 +152,11 @@ int DodajPozivUListu(PozicijaStablo poziv, PozicijaLista headPozivLista){
 
 int PrintPozivLista(PozicijaLista headPozivLista){
 	int i = 0;
-	PrintBorder();
-	printf("Lista poziva: \n");
 	if(headPozivLista == NULL){
 		printf("Lista poziva je trenutno prazna");
 		return EXIT_SUCCESS;
 	}
+	printf("Lista poziva: \n");
 	while(headPozivLista != NULL){
 		PrintDatum(headPozivLista->poziv->datum);
 		printf(" %dm %ds", headPozivLista->poziv->trajanje_poziva / 60, headPozivLista->poziv->trajanje_poziva % 60);
@@ -211,18 +210,31 @@ int ProcitajPozivDatoteku(HashTab hashTab, PozicijaLista headPoziv, PozicijaKont
 }
 
 int SpremiPozive(HashTab hashTab, char* imeDat){
-	FILE* dat = NULL;
-	PozicijaStablo korijen = NULL;
 	int i = 0;
-	dat = fopen(imeDat, "w");
+	for(i = 0; i < MAX_HASH_TABLE_SIZE; i++){
+		SpremiStablo(hashTab->headPoziv[i], imeDat);
+	}
+	printf("Datoteka poziva uspjesno snimljena");
+	return EXIT_SUCCESS;
+}
+
+int SpremiStablo(PozicijaStablo p, char* imeDat){
+	FILE* dat = NULL;
+	dat = fopen(imeDat, "a");
 	if(!dat){
 		printf("Greska pri otvaranju datoteke");
 		return EXIT_FAILURE;
 	}
 
-	korijen = hashTab->headPoziv[i];
-	for(i = 0; i < MAX_STRING_SIZE; i++){
-		korijen = SpremiStablo(hashTab->headPoziv[i], imeDat);
+	if(p == NULL){
+		return EXIT_FAILURE;
 	}
+	fprintf(dat, "%d-%d-%d", p->datum.dan, p->datum.mjesec, p->datum.godina);
+	fprintf(dat, "  %ds %s %s %s\n", p->trajanje_poziva, p->kontakt->ime, p->kontakt->prezime, p->kontakt->pozivni_broj);
 	fclose(dat);
+	SpremiStablo(p->lijevo, imeDat);
+	SpremiStablo(p->desno, imeDat);
+	return EXIT_SUCCESS;
 }
+
+//poziv print pojedinacno

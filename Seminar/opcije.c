@@ -23,6 +23,12 @@ int OpcijaNapraviPoziv(PozicijaKontakt headKontakt, HashTab hashTab){
 	char tmpPoziv[MAX_STRING_SIZE] = {0};
 	PozicijaKontakt tmpKontakt = NULL;
 	PozicijaStablo PozivKontakt = NULL;
+
+	if(headKontakt->sljedeci == NULL){
+		printf("Ne moguce je napraviti poziv ako je snimljeno 0 kontakta");
+		return EXIT_FAILURE;
+	}
+
 	printf("Upisi broj kontakta koji zelite nazvati: ");
 	scanf(" %s", tmpPoziv); 
 	if(BrojIspravan(tmpPoziv) != EXIT_SUCCESS){
@@ -43,6 +49,12 @@ int OpcijaNapraviPoziv(PozicijaKontakt headKontakt, HashTab hashTab){
 int OpcijaIzmjeniKontakt(PozicijaKontakt headKontakt){
 	PozicijaKontakt tmpKontakt = NULL;
 	char tmp[MAX_STRING_SIZE] = {0};
+
+	if(headKontakt->sljedeci == NULL){
+		printf("Ne moguce je napraviti izmjenu ako je snimljeno 0 kontakta");
+		return EXIT_FAILURE;
+	}
+
 	printf("Upisi pozivni broj kontakta koji zelite azurirati u formatu: XXX-XXX-XXXX: ");
 	scanf(" %s", tmp);
 	if(BrojIspravan(tmp) != EXIT_SUCCESS){
@@ -63,6 +75,12 @@ int OpcijaIzmjeniKontakt(PozicijaKontakt headKontakt){
 int OpcijaIzbrisiKontakt(PozicijaKontakt headKontakt){
 	PozicijaKontakt tmpKontakt = NULL;
 	char tmp[MAX_STRING_SIZE] = {0};
+
+	if(headKontakt->sljedeci == NULL){
+		printf("Ne moguce je napraviti brisanje ako je snimljeno 0 kontakta");
+		return EXIT_FAILURE;
+	}
+
 	printf("Upisi broj kontakta koji zelite izbrisati: ");
 	scanf(" %s", tmp);
 	if(BrojIspravan(tmp) != EXIT_SUCCESS){
@@ -89,15 +107,20 @@ int OpcijaDatoteka(PozicijaKontakt headKontakt, HashTab hashTab, PozicijaLista h
 	system("cls");
 	while(isActive){
 		PrintDatotekaMenu();
+		printf("Odaberite opciju: ");
 		scanf(" %c", &ch);
 		system("cls");
 		switch(ch){
 			case '1': 
 				printf("Odabrano citanje kontakt datoteke. Upisite ime datoteke za procitati: ");
 				scanf(" %s", tmp);
-				ProcitajKontaktDatoteku(tmp, headKontakt->sljedeci);
+				ProcitajKontaktDatoteku(tmp, headKontakt);
 				break;
 			case '2': 
+				if(headKontakt->sljedeci == NULL){
+					printf("Ne postoje kontakti koji bi mogli biti snimljeni");
+					break;
+				}
 				printf("Odabrano spremanje kontakt datoteke. Upisite ime datoteke za spremiti: ");
 				scanf(" %s", tmp);
 				SpremiKontakte(headKontakt, tmp);
@@ -109,14 +132,19 @@ int OpcijaDatoteka(PozicijaKontakt headKontakt, HashTab hashTab, PozicijaLista h
 				HashTablicuUListu(hashTab, headPoziv);
 				break;
 			case '4':
+				if(headPoziv->sljedeci == NULL){
+					printf("Ne postoje pozivi koji bi mogli biti snimljeni");
+					break;
+				}
 				printf("Odabrano spremanje kontakt datoteke. Upisite ime datoteke za spremiti: ");
 				scanf(" %s", tmp);
+				SpremiPozive(hashTab, tmp);
 				break;
 			case '5':
 				isActive = 0;
 				break;
 			default: 
-				printf("Krivi unos probatje ponovno\n");
+				printf("Krivi unos probajte ponovno\n");
 				break;
 		}
 	}
@@ -124,5 +152,59 @@ int OpcijaDatoteka(PozicijaKontakt headKontakt, HashTab hashTab, PozicijaLista h
 }
 
 int OpcijaStatistika(PozicijaKontakt headKontakt, HashTab hashTab, PozicijaLista headPoziv){
+	int isActive = 1;
+	Datum dm1 = {.godina = 0, .mjesec = 0, .dan = 0}, dm2 = {.godina = 0, .mjesec = 0, .dan = 0};
 
+	char tmpString1[MAX_STRING_SIZE] = {0}, tmpString2[MAX_STRING_SIZE] = {0};
+	char ch = '0';
+	if(headPoziv->sljedeci == NULL){
+		printf(" Ne mogu se obavljati pretrazivanja ako je obavljeno 0 poziva");
+		return EXIT_FAILURE;
+	}
+
+	while(isActive){
+		PrintBorder();
+		printf("\tPretrazivanje menu:\n \t\t1. Najdulji poziv\n\t\t2. Ukupno vrijeme poziva\n\t\t3. Pozivi u vremenskom razdoblju\n");
+		printf("\t\t4. Ucestalost poziva na odredene kontakte\n\t\t5. Natrag na glavni menu\n");
+		PrintBorder();
+		printf("Odaberite opciju: ");
+		scanf(" %c", &ch);
+		system("cls");
+		switch(ch){
+			case '1':
+				NajduljiPoziv(headPoziv);
+				break;
+			case '2':
+				UkupnoVrijemePoziva(headPoziv);
+				break;
+			case '3':
+				printf("Unesi prvi datum: ");
+				scanf(" %s", tmpString1);
+				if(ProvjeriDatum(tmpString1) != EXIT_SUCCESS){
+					printf("Krivo");
+					break;
+				}
+				dm1 = PretvoriStringUDatum(tmpString1);
+				printf("Unesi drugi datum: ");
+				scanf(" %s", tmpString2);
+				if(ProvjeriDatum(tmpString2) != EXIT_SUCCESS){
+					printf("Krivo");
+					break;
+				}
+				dm2 = PretvoriStringUDatum(tmpString2);
+				NadiPoziveUVremenskomRazdoblju(headPoziv, dm1, dm2);
+				break;
+			case '4':
+				ObavljeniPozivi(headPoziv, headKontakt);
+				break;
+			case '5':
+				isActive = 0;
+				break;
+			default:
+				printf("Krivi unos probajte ponovno\n");
+				break;
+		}
+
+	}
+	return EXIT_SUCCESS;
 }

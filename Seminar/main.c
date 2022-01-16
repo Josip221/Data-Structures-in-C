@@ -4,10 +4,12 @@
 #include "pomocne.c"
 #include "datum.c"
 #include "opcije.c"
+#include "pretrazivanja.c"
+#include "oslobodiMemoriju.c"
 
 int main(int argc, char *argv[]){
 	srand(time(NULL));
-	int isActive, i = 0, hasChanged = 1;
+	int isActive, i = 0, hasChanged = 0;
 	char ch = '0';
 
 	PozicijaKontakt headKontakt = NULL;
@@ -50,12 +52,15 @@ int main(int argc, char *argv[]){
 					HashTablicuUListu(hashTab, headPoziv);
 				}
 				PrintPozivLista(headPoziv->sljedeci);
-				hasChanged = 1;
+				hasChanged = 0;
 				break;
 			case '7':
 				OpcijaDatoteka(headKontakt, hashTab, headPoziv);
 				break;
 			case '8':
+				if(hasChanged){
+					HashTablicuUListu(hashTab, headPoziv);
+				}
 				OpcijaStatistika(headKontakt, hashTab, headPoziv);
 				break;
 			case '9':
@@ -66,5 +71,9 @@ int main(int argc, char *argv[]){
 				printf("Pogresan unos probajte opet\n");
 		}
 	}
+
+	//oslobodi memoriju
+	OslobodiKontakte(headKontakt->sljedeci);
+
 	return EXIT_SUCCESS;
 }
