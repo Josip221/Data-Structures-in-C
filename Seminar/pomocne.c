@@ -9,6 +9,9 @@ int BrojIspravan(char* testString){
 
 	// XXX-XXX-XXXX 3-3-4
 	for(i = 1; i < 4; i++){
+		if(!token){
+			break;
+		}
 		if(strlen(token) == 3 && (i == 1 || i == 2)){
 			token = strtok(NULL, "-");
 			if(StringBezSlova(token) == EXIT_SUCCESS){

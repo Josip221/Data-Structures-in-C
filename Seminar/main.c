@@ -72,8 +72,10 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	//oslobodi memoriju
-	//OslobodiKontakte(headKontakt->sljedeci);
+
+	OslobodiKontakte(headKontakt);
+	OslobodiPozivListu(headPoziv);
+	OslobodiHashTablicu(hashTab);
 
 	return EXIT_SUCCESS;
 }

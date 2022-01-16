@@ -25,7 +25,7 @@ int OpcijaNapraviPoziv(PozicijaKontakt headKontakt, HashTab hashTab){
 	PozicijaStablo PozivKontakt = NULL;
 
 	if(headKontakt->sljedeci == NULL){
-		printf("Ne moguce je napraviti poziv ako je snimljeno 0 kontakta");
+		printf("Nemoguce je napraviti poziv ako je snimljeno 0 kontakta");
 		return EXIT_FAILURE;
 	}
 
@@ -51,7 +51,7 @@ int OpcijaIzmjeniKontakt(PozicijaKontakt headKontakt){
 	char tmp[MAX_STRING_SIZE] = {0};
 
 	if(headKontakt->sljedeci == NULL){
-		printf("Ne moguce je napraviti izmjenu ako je snimljeno 0 kontakta");
+		printf("Nemoguce je napraviti izmjenu ako je snimljeno 0 kontakta");
 		return EXIT_FAILURE;
 	}
 
@@ -77,7 +77,7 @@ int OpcijaIzbrisiKontakt(PozicijaKontakt headKontakt){
 	char tmp[MAX_STRING_SIZE] = {0};
 
 	if(headKontakt->sljedeci == NULL){
-		printf("Ne moguce je napraviti brisanje ako je snimljeno 0 kontakta");
+		printf("Nemoguce je napraviti brisanje ako je snimljeno 0 kontakta");
 		return EXIT_FAILURE;
 	}
 
@@ -118,7 +118,7 @@ int OpcijaDatoteka(PozicijaKontakt headKontakt, HashTab hashTab, PozicijaLista h
 				break;
 			case '2': 
 				if(headKontakt->sljedeci == NULL){
-					printf("Ne postoje kontakti koji bi mogli biti snimljeni");
+					printf("Nepostoje kontakti koji bi mogli biti snimljeni");
 					break;
 				}
 				printf("Odabrano spremanje kontakt datoteke. Upisite ime datoteke za spremiti: ");
@@ -133,7 +133,7 @@ int OpcijaDatoteka(PozicijaKontakt headKontakt, HashTab hashTab, PozicijaLista h
 				break;
 			case '4':
 				if(headPoziv->sljedeci == NULL){
-					printf("Ne postoje pozivi koji bi mogli biti snimljeni");
+					printf("Nepostoje pozivi koji bi mogli biti snimljeni");
 					break;
 				}
 				printf("Odabrano spremanje kontakt datoteke. Upisite ime datoteke za spremiti: ");
@@ -144,7 +144,7 @@ int OpcijaDatoteka(PozicijaKontakt headKontakt, HashTab hashTab, PozicijaLista h
 				isActive = 0;
 				break;
 			default: 
-				printf("Krivi unos probajte ponovno\n");
+				printf("Pogresan unos probajte opet\n");
 				break;
 		}
 	}
@@ -158,7 +158,7 @@ int OpcijaStatistika(PozicijaKontakt headKontakt, HashTab hashTab, PozicijaLista
 	char tmpString1[MAX_STRING_SIZE] = {0}, tmpString2[MAX_STRING_SIZE] = {0};
 	char ch = '0';
 	if(headPoziv->sljedeci == NULL){
-		printf(" Ne mogu se obavljati pretrazivanja ako je obavljeno 0 poziva");
+		printf("Nemogu se obavljati pretrazivanja ako je obavljeno 0 poziva");
 		return EXIT_FAILURE;
 	}
 
@@ -201,7 +201,7 @@ int OpcijaStatistika(PozicijaKontakt headKontakt, HashTab hashTab, PozicijaLista
 				isActive = 0;
 				break;
 			default:
-				printf("Krivi unos probajte ponovno\n");
+				printf("Pogresan unos probajte opet\n");
 				break;
 		}
 

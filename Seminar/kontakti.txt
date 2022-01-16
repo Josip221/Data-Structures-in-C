@@ -1,6 +1,6 @@
 Josip Maretic 091-900-7606
 Luka Maretic 091-200-8080
-Toma Donolagic 091-280-9999
+Toma Horvat 091-280-9999
 Filip Seric 093-870-4440
 Luka Zekan 091-280-9199
 Karlo Jozic 091-500-2330
@@ -14,3 +14,7 @@ Ante Jozic 091-290-6000
 Bozo Topic 093-800-6067
 Michelle Saric 091-901-7606
 Dorian Matic 095-500-2001
+Walter White 091-201-2020
+Jesse Pinkman 093-911-9111
+Gus Fring 091-888-8888
+Hank Schrader 096-333-3333

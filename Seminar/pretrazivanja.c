@@ -1,7 +1,5 @@
 #include "Funkcije.h"
 
-//jos ovo i gotov, napravi prototipe
-
 int NajduljiPoziv(PozicijaLista headLista){
 	PozicijaLista najduljiPoziv = NULL;
 	najduljiPoziv = StvoriClanListe();

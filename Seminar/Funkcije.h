@@ -113,5 +113,9 @@ int NadiPoziveUVremenskomRazdoblju(PozicijaLista, Datum , Datum );
 int ObavljeniPozivi(PozicijaLista, PozicijaKontakt);
 
 //Oslobadanje memorije
+int OslobodiKontakte(PozicijaKontakt);
+int OslobodiPozivListu(PozicijaLista);
+int OslobodiStablo(PozicijaStablo);
+int OslobodiHashTablicu(HashTab);
 
 #endif
