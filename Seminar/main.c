@@ -73,7 +73,7 @@ int main(int argc, char *argv[]){
 	}
 
 	//oslobodi memoriju
-	OslobodiKontakte(headKontakt->sljedeci);
+	//OslobodiKontakte(headKontakt->sljedeci);
 
 	return EXIT_SUCCESS;
 }
