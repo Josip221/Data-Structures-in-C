@@ -201,13 +201,13 @@ int ProcitajPozivDatoteku(HashTab hashTab, PozicijaLista headPoziv, PozicijaKont
 			tmpStablo->trajanje_poziva = OdstraniS(tmpVrijeme);
 			tmpStablo->datum = PretvoriStringUDatum(tmpDatum);
 			DodajUHashTablicu(hashTab, tmpStablo);
+			i++;
 		}
 		else{
 			printf("Ne uspjesno dodan poziv: ");
 			printf(" %dm %ds", OdstraniS(tmpVrijeme) / 60, OdstraniS(tmpVrijeme)  % 60);
 			printf(" %s %s %s\n", tmpIme, tmpPrezime, tmpBroj);
 		}
-		i++;
 	}
 	printf("Dodano %d poziva\n", i);
 	fclose(dat);
