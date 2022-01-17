@@ -103,6 +103,11 @@ PozicijaStablo DodajCvorUStablo(PozicijaStablo p, PozicijaStablo q){
 	return p;
 }
 
+//
+// Poziv lista funkcije
+//
+
+
 PozicijaLista StvoriClanListe(){
 	PozicijaLista q = NULL;
 	q = (PozicijaLista) malloc(sizeof(Lista));
@@ -236,5 +241,3 @@ int SpremiStablo(PozicijaStablo p, char* imeDat){
 	SpremiStablo(p->desno, imeDat);
 	return EXIT_SUCCESS;
 }
-
-//poziv print pojedinacno

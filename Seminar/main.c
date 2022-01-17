@@ -20,9 +20,10 @@ int main(int argc, char *argv[]){
 	hashTab = SvoriHashTab();
 	headPoziv = StvoriClanListe();
 
-	ProcitajKontaktDatoteku("kontakti.txt", headKontakt);
-	ProcitajPozivDatoteku(hashTab, headPoziv, headKontakt, "pozivi.txt");
-	HashTablicuUListu(hashTab, headPoziv);
+	// za tesiranje programa da nemoram svaki put upisivati kontakte i pozive
+	// ProcitajKontaktDatoteku("kontakti.txt", headKontakt);
+	// ProcitajPozivDatoteku(hashTab, headPoziv, headKontakt, "pozivi.txt");
+	// HashTablicuUListu(hashTab, headPoziv);
 
 	while(isActive){
 		PrintPhoneBookMenu();

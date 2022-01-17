@@ -1,5 +1,4 @@
 #include "Funkcije.h"
-// jos ovo dovrsiti i gotov
 
 int OslobodiKontakte(PozicijaKontakt headKontakt){
 	PozicijaKontakt tmp = NULL;
@@ -31,6 +30,7 @@ int OslobodiHashTablicu(HashTab hashTab){
 		OslobodiStablo(hashTab->headPoziv[i]);
 	}
 	free(hashTab);
+	return EXIT_SUCCESS;
 }
 
 int OslobodiStablo(PozicijaStablo p){
@@ -39,4 +39,5 @@ int OslobodiStablo(PozicijaStablo p){
 		OslobodiStablo(p->desno);
 		free(p);
 	}
+	return EXIT_SUCCESS;
 }

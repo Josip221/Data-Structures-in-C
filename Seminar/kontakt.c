@@ -14,43 +14,6 @@ PozicijaKontakt StvoriKontakt(){
 	return tmp;
 }
 
-int ProcitajKontaktDatoteku(char *imeDat, PozicijaKontakt headKontakt) {
-	FILE *dat = NULL;
-	char tmpBroj[MAX_STRING_SIZE] = {0};
-	char tmpIme[MAX_STRING_SIZE] = {0}, tmpPrezime[MAX_STRING_SIZE] = {0};
-	dat = fopen(imeDat, "r");
-	if(!dat){
-		printf("Greska pri otvaranju kontakt datoteke. Probajte ponovno");
-		return EXIT_FAILURE;
-	}
-	while(!feof(dat)){
-		fscanf(dat, "%s %s %s", tmpIme, tmpPrezime, tmpBroj);
-		DodajKontaktUListu(headKontakt, tmpBroj, tmpIme, tmpPrezime);
-	}
-	fclose(dat);
-	return EXIT_SUCCESS;
-}
-
-int PrintKontaktLista(PozicijaKontakt headKontakt){
-	system("cls");
-	char ch = '0', ch1;
-	int isActive = 0;
-	if(headKontakt == NULL){
-		printf("Lista kontakata je trenutno prazna");
-		return EXIT_SUCCESS;
-	}
-	while(headKontakt != NULL){
-		if(toupper(ch) < toupper(headKontakt->ime[0])){
-			ch = headKontakt->ime[0];
-			printf("------------------------------------\n");
-			printf("%c: ", ch);
-		}
-		printf("\t%s %s %s\n", headKontakt->ime, headKontakt->prezime, headKontakt->pozivni_broj);
-		headKontakt = headKontakt->sljedeci;
-	}
-	MenuStop();
-	return EXIT_SUCCESS;
-};
 
 int DodajKontaktUListu(PozicijaKontakt headKontakt, char* pozivni_broj, char* ime, char* prezime){
 	PozicijaKontakt noviKontakt = NULL;
@@ -186,4 +149,40 @@ int SpremiKontakte(PozicijaKontakt headKontakt, char* imeDat){
 	return EXIT_SUCCESS;
 }
 
-//kontakt print pojedinacno
+int ProcitajKontaktDatoteku(char *imeDat, PozicijaKontakt headKontakt) {
+	FILE *dat = NULL;
+	char tmpBroj[MAX_STRING_SIZE] = {0};
+	char tmpIme[MAX_STRING_SIZE] = {0}, tmpPrezime[MAX_STRING_SIZE] = {0};
+	dat = fopen(imeDat, "r");
+	if(!dat){
+		printf("Greska pri otvaranju kontakt datoteke. Probajte ponovno");
+		return EXIT_FAILURE;
+	}
+	while(!feof(dat)){
+		fscanf(dat, "%s %s %s", tmpIme, tmpPrezime, tmpBroj);
+		DodajKontaktUListu(headKontakt, tmpBroj, tmpIme, tmpPrezime);
+	}
+	fclose(dat);
+	return EXIT_SUCCESS;
+}
+
+int PrintKontaktLista(PozicijaKontakt headKontakt){
+	system("cls");
+	char ch = '0', ch1;
+	int isActive = 0;
+	if(headKontakt == NULL){
+		printf("Lista kontakata je trenutno prazna");
+		return EXIT_SUCCESS;
+	}
+	while(headKontakt != NULL){
+		if(toupper(ch) < toupper(headKontakt->ime[0])){
+			ch = headKontakt->ime[0];
+			printf("------------------------------------\n");
+			printf("%c: ", ch);
+		}
+		printf("\t%s %s %s\n", headKontakt->ime, headKontakt->prezime, headKontakt->pozivni_broj);
+		headKontakt = headKontakt->sljedeci;
+	}
+	MenuStop();
+	return EXIT_SUCCESS;
+};
