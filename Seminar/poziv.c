@@ -28,6 +28,7 @@ HashTab SvoriHashTab(){
 		printf("Greska pri alociranju memorije");
 		return NULL;
 	}
+	hash->ukupni_broj_poziva = 0;
 	hash->headPoziv = (PozicijaStablo*) malloc(sizeof(PozicijaStablo) * MAX_HASH_TABLE_SIZE);
 	if(hash->headPoziv == NULL){
 		printf("Greska pri alociranju memorije");
@@ -41,35 +42,41 @@ HashTab SvoriHashTab(){
 }
 
 int DodajUHashTablicu(HashTab hashTable,  PozicijaStablo q){
-	int index = 0, isActive = 0;
+	int index = 0;
 	PozicijaStablo korijen = NULL, tmp = NULL;
 
-	q->id_poziv = RandomBroj(5000, 1);
+	q->id_poziv = RandomBroj(RAND_MAX, 0);
 	index = hashFunkcija(q->id_poziv);
 	korijen = hashTable->headPoziv[index];
 
+	if(hashTable->ukupni_broj_poziva >= MAX_BROJ_POZIVA){
+		printf("Dosegnut je maksimalni broj poziva u listi, nemoguce dodati poziv: ");
+		PrintDatum(q->datum);
+		PrintVrijeme(q->trajanje_poziva);
+		PrintImePrezimeBroj(q->kontakt);
+		return EXIT_FAILURE;
+	}
+
 	if(korijen == NULL){
 		hashTable->headPoziv[index] = q;
-		printf("Uspjesno dodan poziv: ");
-		PrintDatum(q->datum);
-		printf(" %dm %ds", q->trajanje_poziva / 60, q->trajanje_poziva % 60);
-		printf(" %s %s %s\n", q->kontakt->ime, q->kontakt->prezime, q->kontakt->pozivni_broj);
 	}
 	else{
 		tmp = NadiCvorPoID(korijen, hashFunkcija(q->id_poziv));
 		if(tmp == NULL){
 				//ne postoji poziv s istim id-om, dodaj
 				korijen = DodajCvorUStablo(korijen, q);
-				printf("Uspjesno dodan poziv: ");
-				PrintDatum(korijen->datum);
-				printf(" %dm %ds", q->trajanje_poziva / 60, q->trajanje_poziva % 60);
-				printf(" %s %s %s\n", q->kontakt->ime, q->kontakt->prezime, q->kontakt->pozivni_broj);
 		}
 		else{
 				//vec postoji poziv s ovim id-om, probaj ponovno s novim id
 				DodajUHashTablicu(hashTable, q);
+				return EXIT_FAILURE;
 		}
 	}
+	printf("Uspjesno dodan poziv: ");
+	PrintDatum(q->datum);
+	PrintVrijeme(q->trajanje_poziva);
+	PrintImePrezimeBroj(q->kontakt);
+	hashTable->ukupni_broj_poziva++;
 	return EXIT_SUCCESS;
 }
 
@@ -164,8 +171,8 @@ int PrintPozivLista(PozicijaLista headPozivLista){
 	printf("Lista poziva: \n");
 	while(headPozivLista != NULL){
 		PrintDatum(headPozivLista->poziv->datum);
-		printf(" %dm %ds", headPozivLista->poziv->trajanje_poziva / 60, headPozivLista->poziv->trajanje_poziva % 60);
-		printf(" %s %s %s\n", headPozivLista->poziv->kontakt->ime, headPozivLista->poziv->kontakt->prezime, headPozivLista->poziv->kontakt->pozivni_broj);
+		PrintVrijeme(headPozivLista->poziv->trajanje_poziva);
+		PrintImePrezimeBroj(headPozivLista->poziv->kontakt);
 		headPozivLista = headPozivLista->sljedeci;
 		i++;
 	}
@@ -193,19 +200,20 @@ int ProcitajPozivDatoteku(HashTab hashTab, PozicijaLista headPoziv, PozicijaKont
 		if(BrojIspravan(tmpBroj) == EXIT_SUCCESS && ProvjeriDatum(tmpDatum) == EXIT_SUCCESS){
 			tmpKontakt = NadiKontaktPoBroju(headKontakt, tmpBroj);
 			if(tmpKontakt == NULL){
-				printf(" %dm %ds", OdstraniS(tmpVrijeme) / 60, OdstraniS(tmpVrijeme)  % 60);
+				PrintVrijeme(OdstraniS(tmpVrijeme));
 				printf(" %s %s %s\n", tmpIme, tmpPrezime, tmpBroj);
 				continue;
 			}
 			tmpStablo = StvoriCvorStabla(tmpKontakt);
 			tmpStablo->trajanje_poziva = OdstraniS(tmpVrijeme);
 			tmpStablo->datum = PretvoriStringUDatum(tmpDatum);
-			DodajUHashTablicu(hashTab, tmpStablo);
-			i++;
+			if(	DodajUHashTablicu(hashTab, tmpStablo) == EXIT_SUCCESS){
+				i++;
+			}
 		}
 		else{
 			printf("Ne uspjesno dodan poziv: ");
-			printf(" %dm %ds", OdstraniS(tmpVrijeme) / 60, OdstraniS(tmpVrijeme)  % 60);
+			PrintVrijeme(OdstraniS(tmpVrijeme));
 			printf(" %s %s %s\n", tmpIme, tmpPrezime, tmpBroj);
 		}
 	}

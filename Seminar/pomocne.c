@@ -74,6 +74,16 @@ int MenuStop(){
 	return EXIT_SUCCESS;
 }
 
+int PrintVrijeme(int vrijemeSekunde){
+	printf(" %dm %ds", vrijemeSekunde / 60,  vrijemeSekunde % 60);
+	return EXIT_SUCCESS;
+}
+
+int PrintImePrezimeBroj(PozicijaKontakt kontakt){
+	printf(" %s %s %s\n", kontakt->ime, kontakt->prezime, kontakt->pozivni_broj);
+	return EXIT_SUCCESS;
+}
+
 int PrintPhoneBookMenu(){
 	PrintBorder();
 	printf("\n\t\t\tPhonebook Menu\t\t\t\n\n");

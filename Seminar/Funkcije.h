@@ -46,6 +46,7 @@ typedef struct _CvorPoziv {
 struct _HashT;
 typedef struct _HashT* HashTab;
 typedef struct _HashT{
+	int ukupni_broj_poziva;
 	PozicijaStablo* headPoziv;
 } HashT;
 
@@ -97,6 +98,8 @@ int PrintDatotekaMenu();
 int PrintBorder();
 int OdstraniS(char*);
 int StringBezSlova();
+int PrintVrijeme(int);
+int PrintImePrezimeBroj(PozicijaKontakt);
 
 //Datum funkcije
 Datum StvoriRandomDatum();

@@ -57,6 +57,8 @@ int DodajKontaktUListu(PozicijaKontakt headKontakt, char* pozivni_broj, char* im
 	noviKontakt->sljedeci = headKontakt->sljedeci;
 	noviKontakt->prethodni = headKontakt;
 	headKontakt->sljedeci = noviKontakt;
+	printf("Uspjesno dodan kontakt: ");
+	PrintImePrezimeBroj(noviKontakt);
 	return EXIT_SUCCESS;
 }
 

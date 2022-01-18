@@ -21,7 +21,7 @@ int main(int argc, char *argv[]){
 	headPoziv = StvoriClanListe();
 
 	// za tesiranje programa da nemoram svaki put upisivati kontakte i pozive
-	// ProcitajKontaktDatoteku("kontakti.txt", headKontakt);
+	 ProcitajKontaktDatoteku("kontakti.txt", headKontakt);
 	// ProcitajPozivDatoteku(hashTab, headPoziv, headKontakt, "pozivi.txt");
 	// HashTablicuUListu(hashTab, headPoziv);
 

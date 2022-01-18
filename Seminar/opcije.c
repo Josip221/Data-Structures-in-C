@@ -181,14 +181,14 @@ int OpcijaStatistika(PozicijaKontakt headKontakt, HashTab hashTab, PozicijaLista
 				printf("Unesi prvi datum: ");
 				scanf(" %s", tmpString1);
 				if(ProvjeriDatum(tmpString1) != EXIT_SUCCESS){
-					printf("Krivo");
+					printf("Krivo upisan datum, probajte opet");
 					break;
 				}
 				dm1 = PretvoriStringUDatum(tmpString1);
 				printf("Unesi drugi datum: ");
 				scanf(" %s", tmpString2);
 				if(ProvjeriDatum(tmpString2) != EXIT_SUCCESS){
-					printf("Krivo");
+					printf("Krivo upisan datum probajte opet");
 					break;
 				}
 				dm2 = PretvoriStringUDatum(tmpString2);
