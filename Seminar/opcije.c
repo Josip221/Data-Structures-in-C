@@ -2,18 +2,17 @@
 
 int OpcijaDodajNoviKontakt(PozicijaKontakt headKontakt){
 	char tmp1[MAX_STRING_SIZE] = {0}, tmp2[MAX_STRING_SIZE] = {0}, tmp3[MAX_STRING_SIZE] = {0};
+
 	printf("Upisite ime i prezime novog kontakta: ");
 	scanf(" %s %s", tmp1, tmp2);
 	printf("Upisite pozivni broj kontakta u formatu XXX-XXX-XXXX: ");
 	scanf(" %s", tmp3);
+
 	if(BrojIspravan(tmp3) != EXIT_SUCCESS){
 		printf("Ne ispravno unesen pozivni broj, treba biti u formatu: XXX-XXX-XXXX. Probajte ponovno\n ");
 		return EXIT_FAILURE;
 	}
-	if(DodajKontaktUListu(headKontakt, tmp3, tmp1, tmp2) == EXIT_SUCCESS){
-		printf("Uspjesno dodan %s %s %s u kontakte.\n", tmp3, tmp1, tmp2);
-	}
-	else{
+	if(DodajKontaktUListu(headKontakt, tmp3, tmp1, tmp2) != EXIT_SUCCESS){
 		printf("\nKontakt nije dodan, probajte ponovno.\n");
 	}
 	return EXIT_SUCCESS;
@@ -31,6 +30,7 @@ int OpcijaNapraviPoziv(PozicijaKontakt headKontakt, HashTab hashTab){
 
 	printf("Upisi broj kontakta koji zelite nazvati: ");
 	scanf(" %s", tmpPoziv); 
+
 	if(BrojIspravan(tmpPoziv) != EXIT_SUCCESS){
 		printf("Ne ispravno unesen pozivni broj, treba biti u formatu: XXX-XXX-XXXX. Probajte ponovno\n ");
 		return EXIT_FAILURE;
@@ -57,6 +57,7 @@ int OpcijaIzmjeniKontakt(PozicijaKontakt headKontakt){
 
 	printf("Upisi pozivni broj kontakta koji zelite azurirati u formatu: XXX-XXX-XXXX: ");
 	scanf(" %s", tmp);
+
 	if(BrojIspravan(tmp) != EXIT_SUCCESS){
 		printf("Ne ispravno unesen pozivni broj, treba biti u formatu: XXX-XXX-XXXX. Probajte ponovno\n");
 		return EXIT_FAILURE;
@@ -83,6 +84,7 @@ int OpcijaIzbrisiKontakt(PozicijaKontakt headKontakt){
 
 	printf("Upisi broj kontakta koji zelite izbrisati: ");
 	scanf(" %s", tmp);
+	
 	if(BrojIspravan(tmp) != EXIT_SUCCESS){
 		printf("Ne ispravno unesen pozivni broj, treba biti u formatu: XXX-XXX-XXXX. Probajte ponovno\n");
 		return EXIT_FAILURE;

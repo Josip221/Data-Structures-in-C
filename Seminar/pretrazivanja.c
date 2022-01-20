@@ -25,7 +25,7 @@ int UkupnoVrijemePoziva(PozicijaLista headLista){
 		headLista = headLista->sljedeci;
 	}
 	printf("Ukupno vrijeme svih poziva: %dm %ds", ukupnoVrijeme / 60, ukupnoVrijeme % 60);
-	return ukupnoVrijeme;
+	return EXIT_SUCCESS;;
 }
 
 int NadiPoziveUVremenskomRazdoblju(PozicijaLista headLista, Datum dm1, Datum dm2){

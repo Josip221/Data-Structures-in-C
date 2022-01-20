@@ -7,22 +7,19 @@ int BrojIspravan(char* testString){
 	strcpy(tmp, testString);
 	char* token = strtok(tmp, "-");
 
-	// XXX-XXX-XXXX 3-3-4
 	for(i = 1; i < 4; i++){
 		if(!token){
 			break;
 		}
-		if(strlen(token) == 3 && (i == 1 || i == 2)){
-			token = strtok(NULL, "-");
-			if(StringBezSlova(token) == EXIT_SUCCESS){
+		else if(StringBezSlova(token) == EXIT_SUCCESS){
+			if(strlen(token) == 3 && (i == 1 || i == 2)){
+				token = strtok(NULL, "-");
 				status++;
 			}
-		}
-		else if(strlen(token) == 4 && i == 3){
-			if(StringBezSlova(token) == EXIT_SUCCESS){
+			else if(strlen(token) == 4 && i == 3){
 				status++;
 			}
-		}
+		}	
 	}
 	if(status == 3){
 		return EXIT_SUCCESS;
