@@ -77,7 +77,9 @@ int ProvjeriDaliPostojiVecBroj(char* pozivni_broj, PozicijaKontakt headKontakt){
 
 int IzbrisiKontaktIzListe(PozicijaKontakt kontakt){
 	kontakt->prethodni->sljedeci = kontakt->sljedeci;
-	kontakt->sljedeci->prethodni = kontakt->prethodni;
+	if(kontakt->sljedeci != NULL){
+		kontakt->sljedeci->prethodni = kontakt->prethodni;
+	}
 	free(kontakt);
 	return EXIT_SUCCESS;
 }
